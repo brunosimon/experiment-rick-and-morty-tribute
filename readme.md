@@ -1,8 +1,12 @@
-# Three.js - Template - Complex
+# Experiment - Rick and Morty Tribute
 
-🚧 This template is under construction
+## Links
+
+- [GitHub](https://github.com/brunosimon/experiment-rick-and-morty-tribute)
+- [Live](https://experiment-rick-and-morty-tribute.vercel.app/)
 
 ## Setup
+
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
 
