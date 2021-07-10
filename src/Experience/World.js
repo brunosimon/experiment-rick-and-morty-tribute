@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Portal from './Portal.js'
 
 export default class World
 {
@@ -13,18 +14,14 @@ export default class World
         {
             if(_group.name === 'base')
             {
-                this.setDummy()
+                this.setPortal()
             }
         })
     }
 
-    setDummy()
+    setPortal()
     {
-        const cube = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ map: this.resources.items.lennaTexture })
-        )
-        this.scene.add(cube)        
+        this.portal = new Portal()
     }
 
     resize()
@@ -33,6 +30,10 @@ export default class World
 
     update()
     {
+        if(this.portal)
+        {
+            this.portal.update()
+        }
     }
 
     destroy()
