@@ -4,6 +4,7 @@ uniform float uTime;
 uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
+uniform vec3 uColor4;
 
 #pragma glslify: getPerlinNoise2d = require('../partials/getPerlinNoise2d.glsl')
 #pragma glslify: getPerlinNoise3d = require('../partials/getPerlinNoise3d.glsl')
@@ -42,15 +43,19 @@ void main()
     vec3 color = mix(uColor1, uColor2, mix1);
     
     // Second mix
-    vec2 distoredUv2 = rotate(centeredUv, distanceToCenter * 4.0);
+    vec2 distoredUv2 = rotate(centeredUv, distanceToCenter * 4.0 - uTime * 0.0001);
     float mix2 = getPerlinNoise3d(vec3(distoredUv2 * 20.0, uTime * 0.0005));
     mix2 += getPerlinNoise3d(vec3(centeredUv * 3.0, uTime * 0.0001));
     mix2 += pow(abs((distanceToCenter - 0.25) * 4.0), 2.0);
     mix2 = step(0.4, mix2);
     color = mix(color, uColor3, mix2);
 
-    gl_FragColor = vec4(color, 1.0);
+    // Third mix
+    vec2 distoredUv3 = rotate(centeredUv, - uTime * 0.00002);
+    float mix3 = getPerlinNoise3d(vec3(distoredUv3 * 25.0, uTime * 0.0001));
+    mix3 += (distanceToCenter - 0.3) * 1.0;
+    mix3 = step(0.6, mix3);
+    color = mix(color, uColor4, mix3);
 
-    // float test = pow(abs((distanceToCenter - 0.25) * 4.0), 2.0);
-    // gl_FragColor = vec4(test, test, test, 1.0);
+    gl_FragColor = vec4(color, 1.0);
 }

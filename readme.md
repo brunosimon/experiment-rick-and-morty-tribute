@@ -3,7 +3,7 @@
 ## Links
 
 - [GitHub](https://github.com/brunosimon/experiment-rick-and-morty-tribute)
-- [Live](https://experiment-rick-and-morty-tribute.vercel.app/)
+- [Live](https://experiment-rick-and-morty-tribute.vercel.app)
 
 ## Setup
 

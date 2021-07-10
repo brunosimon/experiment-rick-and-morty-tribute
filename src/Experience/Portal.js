@@ -31,6 +31,7 @@ export default class Portal
                 uColor1: { value: new THREE.Color('#5cad4a') },
                 uColor2: { value: new THREE.Color('#208d45') },
                 uColor3: { value: new THREE.Color('#a7cb54') },
+                uColor4: { value: new THREE.Color('#f8fbf3') },
             },
             vertexShader: portalMainVertexShader,
             fragmentShader: portalMainFragmentShader
