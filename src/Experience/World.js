@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Portal from './Portal.js'
+import Environment from './Environment.js'
 
 export default class World
 {
@@ -15,6 +16,7 @@ export default class World
             if(_group.name === 'base')
             {
                 this.setPortal()
+                this.setEnvironment()
             }
         })
     }
@@ -22,6 +24,11 @@ export default class World
     setPortal()
     {
         this.portal = new Portal()
+    }
+    
+    setEnvironment()
+    {
+        this.environment = new Environment()
     }
 
     resize()

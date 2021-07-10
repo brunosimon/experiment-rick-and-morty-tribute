@@ -14,6 +14,7 @@ export default class Portal
         this.scene.add(this.group)
 
         this.setMain()
+        this.setLight()
     }
 
     setMain()
@@ -21,10 +22,11 @@ export default class Portal
         this.main = {}
 
         // Geometry
-        this.main.geometry = new THREE.PlaneGeometry(3, 3, 1, 1)
+        this.main.geometry = new THREE.PlaneGeometry(1, 1, 1, 1)
 
         // Material
         this.main.material = new THREE.ShaderMaterial({
+            side: THREE.DoubleSide,
             uniforms:
             {
                 uTime: { value: 0 },
@@ -42,8 +44,29 @@ export default class Portal
         this.group.add(this.main.mesh)
     }
 
+    setLight()
+    {
+        this.light = {}
+        
+        this.light.position = new THREE.Vector3(0, 0, 0)
+
+        // Instance
+        this.light.instance = new THREE.PointLight(0x55ff55, 1, 0, 3)
+        this.light.instance.castShadow = true
+        this.light.instance.shadow.camera.near = 0.1
+        this.light.instance.shadow.camera.far = 100
+        this.light.instance.shadow.mapSize.x = 1024
+        this.light.instance.shadow.mapSize.y = 1024
+        this.scene.add(this.light.instance)
+    }
+
     update()
     {
+        this.light.instance.position.copy(this.light.position)
+        this.light.instance.intensity = 1 + Math.sin(this.time.elapsed * 0.0001 * 100) * 0.25
+        this.light.instance.position.x = Math.sin(this.time.elapsed * 0.0001 * 100) * 0.02
+        this.light.instance.position.y = Math.sin(this.time.elapsed * 0.00006 * 100) * 0.02
+        this.light.instance.position.z = Math.sin(this.time.elapsed * 0.00004 * 100) * 0.02
         this.main.material.uniforms.uTime.value = this.time.elapsed
     }
 }
