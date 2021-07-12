@@ -71,6 +71,7 @@ export default class Portal
         this.light.instance.shadow.camera.far = 100
         this.light.instance.shadow.mapSize.x = 1024
         this.light.instance.shadow.mapSize.y = 1024
+        this.light.instance.shadow.bias = - 0.0001
         this.scene.add(this.light.instance)
     }
 
