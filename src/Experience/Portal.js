@@ -62,10 +62,11 @@ export default class Portal
     {
         this.light = {}
         
-        this.light.position = new THREE.Vector3(0, 0, 0)
+        this.light.position = new THREE.Vector3(0, 1, 0)
+        this.light.intensity = 3
 
         // Instance
-        this.light.instance = new THREE.PointLight(0x55ff55, 1, 0, 3)
+        this.light.instance = new THREE.PointLight(0x99ff55, 1, 0, 1.5)
         this.light.instance.castShadow = true
         this.light.instance.shadow.camera.near = 0.1
         this.light.instance.shadow.camera.far = 100
@@ -87,10 +88,10 @@ export default class Portal
 
         // Light
         this.light.instance.position.copy(this.light.position)
-        this.light.instance.intensity = 1 + Math.sin(this.time.elapsed * 0.0001 * 100) * 0.25
-        this.light.instance.position.x = Math.sin(this.time.elapsed * 0.0001 * 100) * 0.02
-        this.light.instance.position.y = Math.sin(this.time.elapsed * 0.00006 * 100) * 0.02
-        this.light.instance.position.z = Math.sin(this.time.elapsed * 0.00004 * 100) * 0.02
+        this.light.instance.intensity = this.light.intensity + Math.sin(this.time.elapsed * 0.0001 * 100) * 0.25
+        this.light.instance.position.x += Math.sin(this.time.elapsed * 0.0001 * 100) * 0.02
+        this.light.instance.position.y += Math.sin(this.time.elapsed * 0.00006 * 100) * 0.02
+        this.light.instance.position.z += Math.sin(this.time.elapsed * 0.00004 * 100) * 0.02
         this.surface.material.uniforms.uTime.value = this.time.elapsed
     }
 }
