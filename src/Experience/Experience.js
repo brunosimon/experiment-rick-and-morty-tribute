@@ -1,8 +1,8 @@
 import * as THREE from 'three'
+import { Pane } from 'tweakpane'
 import Time from './Utils/Time.js'
 import Sizes from './Utils/Sizes.js'
 import Stats from './Utils/Stats.js'
-
 import Resources from './Resources.js'
 import Renderer from './Renderer.js'
 import Camera from './Camera.js'
@@ -27,6 +27,7 @@ export default class Experience
         this.time = new Time()
         this.sizes = new Sizes()
         this.setConfig()
+        this.setDebug()
         this.setStats()
         this.setScene()
         this.setCamera()
@@ -56,6 +57,15 @@ export default class Experience
         const boundings = this.targetElement.getBoundingClientRect()
         this.config.width = boundings.width
         this.config.height = boundings.height || window.innerHeight
+    }
+
+    setDebug()
+    {
+        this.debug = new Pane()
+        this.debug.containerElem_.style.width = '320px'
+        // this.debug.containerElem_.style.maxHeight = 'calc(100vh - 8px * 2)'
+        // this.debug.containerElem_.style.overflowY = 'scroll'
+        // this.debug.containerElem_.style.position = 'fixed'
     }
 
     setStats()
