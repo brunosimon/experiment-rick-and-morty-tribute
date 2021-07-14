@@ -96,6 +96,11 @@ export default class Experience
     setResources()
     {
         this.resources = new Resources(assets)
+
+        this.resources.on('progress', () =>
+        {
+            console.log('progress')
+        })
     }
 
     setWorld()

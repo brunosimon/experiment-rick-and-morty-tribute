@@ -4,7 +4,7 @@ export default [
         data: {},
         items:
         [
-            { name: 'environmentModel', source: '/assets/environment.glb' },
+            { name: 'environmentModel', source: '/assets/environment.gltf' },
         ]
     }
 ]

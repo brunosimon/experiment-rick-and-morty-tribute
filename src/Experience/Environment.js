@@ -38,10 +38,7 @@ export default class Environment
             .addInput(
                 this.uniforms.uRevealProgress,
                 'value',
-                {
-                    min: 0,
-                    max: 1
-                }
+                { label: 'uRevealProgress', min: 0, max: 1 }
             )
 
         // Materials

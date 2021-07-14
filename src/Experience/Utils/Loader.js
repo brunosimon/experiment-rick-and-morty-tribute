@@ -94,10 +94,17 @@ export default class Resources extends EventEmitter
             extensions: ['glb', 'gltf'],
             action: (_resource) =>
             {
-                gltfLoader.load(_resource.source, (_data) =>
-                {
-                    this.fileLoadEnd(_resource, _data)
-                })
+                gltfLoader.load(
+                    _resource.source,
+                    (_data) =>
+                    {
+                        this.fileLoadEnd(_resource, _data)
+                    },
+                    (_xhr) =>
+                    {
+                        // console.log(_xhr.loaded / _xhr.total)
+                    }
+                )
             }
         })
 

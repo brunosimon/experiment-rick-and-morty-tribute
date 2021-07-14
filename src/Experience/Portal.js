@@ -7,8 +7,15 @@ export default class Portal
     constructor()
     {
         this.experience = window.experience
+        this.debug = this.experience.debug
         this.time = this.experience.time
         this.scene = this.experience.scene
+
+        // Debug
+        this.debugFolder = this.debug.addFolder({
+            title: 'portal',
+            expanded: true,
+        })
 
         this.group = new THREE.Group()
         this.scene.add(this.group)
@@ -62,6 +69,7 @@ export default class Portal
     {
         this.light = {}
         
+        this.light.color = '#c9ff2f'
         this.light.position = new THREE.Vector3(0, 1, 0)
         this.light.intensity = 3
 
@@ -74,6 +82,39 @@ export default class Portal
         this.light.instance.shadow.mapSize.y = 1024
         this.light.instance.shadow.bias = - 0.0001
         this.scene.add(this.light.instance)
+
+        // Debug
+        this.debugFolder
+            .addInput(
+                this.light,
+                'color',
+                { view: 'color' }
+            )
+            .on('change', () =>
+            {
+                this.light.instance.color.set(this.light.color)
+            })
+
+        this.debugFolder
+            .addInput(
+                this.light,
+                'intensity',
+                { min: 0, max: 10 }
+            )
+
+        this.debugFolder
+            .addInput(
+                this.light.instance,
+                'decay',
+                { min: 0, max: 10 }
+            )
+
+        this.debugFolder
+            .addInput(
+                this.light.position,
+                'y',
+                { min: 0, max: 10 }
+            )
     }
 
     update()

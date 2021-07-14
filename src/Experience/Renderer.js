@@ -14,6 +14,12 @@ export default class Renderer
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+
+        // Debug
+        this.debugFolder = this.debug.addFolder({
+            title: 'renderer',
+            expanded: true,
+        })
         
         this.usePostprocess = false
 
@@ -46,8 +52,8 @@ export default class Renderer
         this.instance.outputEncoding = THREE.sRGBEncoding
         this.instance.shadowMap.type = THREE.PCFSoftShadowMap
         this.instance.shadowMap.enabled = true
-        // this.instance.toneMapping = THREE.ReinhardToneMapping
-        // this.instance.toneMappingExposure = 2.3
+        this.instance.toneMapping = THREE.ACESFilmicToneMapping
+        this.instance.toneMappingExposure = 2.3
 
         this.context = this.instance.getContext()
 
@@ -56,6 +62,44 @@ export default class Renderer
         {
             this.stats.setRenderPanel(this.context)
         }
+
+        // Debug
+        this.debugFolder
+            .addInput(
+                this.instance,
+                'toneMapping',
+                {
+                    view: 'list',
+                    label: 'toneMapping',
+                    options:
+                    [
+                        { text: 'No', value: THREE.NoToneMapping },,
+                        { text: 'Linear', value: THREE.LinearToneMapping },,
+                        { text: 'Reinhard', value: THREE.ReinhardToneMapping },
+                        { text: 'Cineon', value: THREE.CineonToneMapping },
+                        { text: 'ACESFilmic', value: THREE.ACESFilmicToneMapping },
+                    ]
+                }
+            )
+            .on('change', (_value) =>
+            {
+                this.scene.traverse((_child) =>
+                {
+                    if(_child instanceof THREE.Mesh)
+                    {
+                        _child.material.needsUpdate = true
+                    }
+                })
+            })
+
+        this.debugFolder
+            .addInput(
+                this.instance,
+                'toneMappingExposure',
+                {
+                    min: 0, max: 5
+                }
+            )
     }
 
     setPostProcess()
