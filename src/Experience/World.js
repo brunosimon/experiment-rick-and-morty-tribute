@@ -11,11 +11,12 @@ export default class World
         this.scene = this.experience.scene
         this.resources = this.experience.resources
         
+        this.setPortal()
+        
         this.resources.on('groupEnd', (_group) =>
         {
             if(_group.name === 'base')
             {
-                this.setPortal()
                 this.setEnvironment()
             }
         })
@@ -40,6 +41,11 @@ export default class World
         if(this.portal)
         {
             this.portal.update()
+        }
+
+        if(this.environment)
+        {
+            this.environment.update()
         }
     }
 

@@ -74,18 +74,19 @@ varying vec3 vViewPosition;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 
+uniform float uTime;
 uniform float uRevealProgress;
 uniform vec3 uPlasmaColor1;
 uniform vec3 uPlasmaColor2;
 varying vec4 vWorldPosition;
 
-#pragma glslify: getPerlinNoise3d = require('../partials/getPerlinNoise3d.glsl')
+#pragma glslify: getPerlinNoise4d = require('../partials/getPerlinNoise4d.glsl')
 
 void main()
 {
     float distanceToCenter = length(vWorldPosition);
-    float perlinStrength = getPerlinNoise3d(vWorldPosition.xyz * 3.0);
-    float revealProgress = (distanceToCenter + perlinStrength * 0.2) / 7.0 - uRevealProgress;
+    float perlinStrength = getPerlinNoise4d(vec4(vWorldPosition.xyz * 3.0, uTime * 0.0003));
+    float revealProgress = (distanceToCenter + perlinStrength * 0.5) / 6.5 - uRevealProgress;
 
     if(revealProgress > 0.0)
     {

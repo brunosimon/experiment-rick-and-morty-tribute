@@ -1,3 +1,4 @@
+import gsap from 'gsap'
 import * as THREE from 'three'
 import EnvironmentMaterial from './Materials/EnvironmentMaterial.js'
 
@@ -7,6 +8,7 @@ export default class Environment
     {
         this.experience = window.experience
         this.debug = this.experience.debug
+        this.time = this.experience.time
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
@@ -21,7 +23,8 @@ export default class Environment
 
         // Uniforms
         this.uniforms = {}
-        this.uniforms.uRevealProgress = { value: 0.5 }
+        this.uniforms.uTime = { value: 0 }
+        this.uniforms.uRevealProgress = { value: 0 }
 
         const plasmaColor1 = new THREE.Color('#f8fbf3')
         plasmaColor1.convertSRGBToLinear()
@@ -80,6 +83,7 @@ export default class Environment
                 metalness: material.baseMaterial.metalness,
             })
 
+            newMaterial.uniforms.uTime = this.uniforms.uTime
             newMaterial.uniforms.uRevealProgress = this.uniforms.uRevealProgress
             newMaterial.uniforms.uPlasmaColor1 = this.uniforms.uPlasmaColor1
             newMaterial.uniforms.uPlasmaColor2 = this.uniforms.uPlasmaColor2
@@ -97,5 +101,15 @@ export default class Environment
         })
 
         this.scene.add(this.model)
+
+        window.requestAnimationFrame(() =>
+        {
+            gsap.fromTo(this.uniforms.uRevealProgress, { value: 0.13 }, { duration: 10, ease: 'power2.inOut', value: 1 })
+        })
+    }
+
+    update()
+    {
+        this.uniforms.uTime.value = this.time.elapsed
     }
 }
