@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Portal from './Portal.js'
+import CarLight from './CarLight.js'
 import Environment from './Environment.js'
 
 export default class World
@@ -12,6 +13,7 @@ export default class World
         this.resources = this.experience.resources
         
         this.setPortal()
+        this.setCarLight()
         
         this.resources.on('groupEnd', (_group) =>
         {
@@ -25,6 +27,11 @@ export default class World
     setPortal()
     {
         this.portal = new Portal()
+    }
+
+    setCarLight()
+    {
+        this.carLight = new CarLight()
     }
     
     setEnvironment()
@@ -41,6 +48,11 @@ export default class World
         if(this.portal)
         {
             this.portal.update()
+        }
+
+        if(this.carLight)
+        {
+            this.carLight.update()
         }
 
         if(this.environment)

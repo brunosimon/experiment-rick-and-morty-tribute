@@ -74,7 +74,7 @@ export default class Portal
         this.light.intensity = 3
 
         // Instance
-        this.light.instance = new THREE.PointLight(0x99ff55, 1, 0, 1.5)
+        this.light.instance = new THREE.PointLight(this.light.color, 1, 0, 1.5)
         this.light.instance.castShadow = true
         this.light.instance.shadow.camera.near = 0.1
         this.light.instance.shadow.camera.far = 100
