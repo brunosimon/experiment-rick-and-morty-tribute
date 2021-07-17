@@ -68,6 +68,7 @@ export default class Environment
         {
             const material = this.materials[_materialKey]
             const newMaterial = new EnvironmentMaterial({
+                color: material.baseMaterial.color,
                 map: material.baseMaterial.map,
                 alphaMap: material.baseMaterial.alphaMap,
                 aoMap: material.baseMaterial.aoMap,
