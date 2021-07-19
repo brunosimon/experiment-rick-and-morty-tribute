@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import gsap from 'gsap'
 import Portal from './Portal.js'
 import CarLight from './CarLight.js'
 import PortalGunLight from './PortalGunLight.js'
@@ -17,14 +17,6 @@ export default class World
         this.setCarLight()
         this.setPortalGunLight()
         this.setEnvironment()
-        
-        // this.resources.on('groupEnd', (_group) =>
-        // {
-        //     if(_group.name === 'base')
-        //     {
-        //         this.setEnvironment()
-        //     }
-        // })
     }
 
     setPortal()
@@ -45,6 +37,11 @@ export default class World
     setEnvironment()
     {
         this.environment = new Environment()
+
+        this.environment.on('loaded', () =>
+        {
+            gsap.to(this.portal.surface.material.uniforms.uLoadingMaskAlpha, { value: 0, delay: 1, duration: 1 })
+        })
     }
 
     resize()

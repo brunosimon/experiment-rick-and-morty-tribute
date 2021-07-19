@@ -27,6 +27,11 @@ export default class Portal
     setSurface()
     {
         this.surface = {}
+
+        // Loading mask texture
+        const textureLoader = new THREE.TextureLoader()
+        this.surface.loadingMaskTexture = textureLoader.load('assets/loadingMask.png')
+
         this.surface.pull = {}
         this.surface.pull.speed = 0
         this.surface.pull.target = 0
@@ -55,6 +60,8 @@ export default class Portal
                 uColor2: { value: new THREE.Color('#208d45') },
                 uColor3: { value: new THREE.Color('#a7cb54') },
                 uColor4: { value: new THREE.Color('#f8fbf3') },
+                uLoadingMaskTexture: { value: this.surface.loadingMaskTexture },
+                uLoadingMaskAlpha: { value: 1 }
             },
             vertexShader: portalMainVertexShader,
             fragmentShader: portalMainFragmentShader

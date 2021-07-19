@@ -5,6 +5,8 @@ uniform vec3 uColor1;
 uniform vec3 uColor2;
 uniform vec3 uColor3;
 uniform vec3 uColor4;
+uniform sampler2D uLoadingMaskTexture;
+uniform float uLoadingMaskAlpha;
 
 #pragma glslify: getPerlinNoise2d = require('../partials/getPerlinNoise2d.glsl')
 #pragma glslify: getPerlinNoise3d = require('../partials/getPerlinNoise3d.glsl')
@@ -57,5 +59,11 @@ void main()
     mix3 = step(0.6, mix3);
     color = mix(color, uColor4, mix3);
 
+    // Loading mask
+    float loadingMaskStrength = texture2D(uLoadingMaskTexture, vUv).r * uLoadingMaskAlpha;
+
+    color = mix(color, vec3(1.0), loadingMaskStrength);
+
     gl_FragColor = vec4(color, 1.0);
+    // gl_FragColor = vec4(loadingMaskStrength, loadingMaskStrength, loadingMaskStrength, 1.0);
 }

@@ -3,11 +3,14 @@ import * as THREE from 'three'
 import EnvironmentMaterial from './Materials/EnvironmentMaterial.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import EventEmitter from './Utils/EventEmitter.js'
 
-export default class Environment
+export default class Environment extends EventEmitter
 {
     constructor()
     {
+        super()
+
         this.experience = window.experience
         this.debug = this.experience.debug
         this.time = this.experience.time
@@ -41,6 +44,7 @@ export default class Environment
             (_gltf) =>
             {
                 this.setModel(_gltf)
+                this.trigger('loaded')
             }
         )
     }
