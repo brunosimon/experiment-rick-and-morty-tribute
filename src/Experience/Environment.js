@@ -14,7 +14,6 @@ export default class Environment extends EventEmitter
         this.experience = window.experience
         this.debug = this.experience.debug
         this.time = this.experience.time
-        // this.resources = this.experience.resources
         this.scene = this.experience.scene
 
         // Debug
@@ -114,6 +113,12 @@ export default class Environment extends EventEmitter
                 metalness: material.baseMaterial.metalness,
             })
 
+            const doubleSidedMaterialNames = ['bucketHelmet', 'metalSheet1', 'metalSheet2']
+            if(doubleSidedMaterialNames.includes(material.baseMaterial.name))
+            {
+                newMaterial.side = THREE.DoubleSide
+            }
+            
             newMaterial.uniforms.uTime = this.uniforms.uTime
             newMaterial.uniforms.uRevealProgress = this.uniforms.uRevealProgress
             newMaterial.uniforms.uPlasmaColor1 = this.uniforms.uPlasmaColor1
