@@ -60,7 +60,10 @@ void main()
     color = mix(color, uColor4, mix3);
 
     // Loading mask
-    float loadingMaskStrength = texture2D(uLoadingMaskTexture, vUv).r * uLoadingMaskAlpha;
+    vec2 loadingMaskUv = vUv;
+    loadingMaskUv.y *= 1.5;
+    loadingMaskUv.y -= 0.25;
+    float loadingMaskStrength = texture2D(uLoadingMaskTexture, loadingMaskUv).r * uLoadingMaskAlpha;
 
     color = mix(color, vec3(1.0), loadingMaskStrength);
 
