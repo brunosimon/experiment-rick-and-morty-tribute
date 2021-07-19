@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import Portal from './Portal.js'
+import Particles from './Particles.js'
 import CarLight from './CarLight.js'
 import PortalGunLight from './PortalGunLight.js'
 import Environment from './Environment.js'
@@ -14,6 +15,7 @@ export default class World
         this.resources = this.experience.resources
         
         this.setPortal()
+        this.setParticles()
         this.setCarLight()
         this.setPortalGunLight()
         this.setEnvironment()
@@ -22,6 +24,11 @@ export default class World
     setPortal()
     {
         this.portal = new Portal()
+    }
+
+    setParticles()
+    {
+        this.particles = new Particles()
     }
 
     setCarLight()
@@ -46,6 +53,10 @@ export default class World
 
     resize()
     {
+        if(this.particles)
+        {
+            this.particles.resize()
+        }
     }
 
     update()
@@ -53,6 +64,11 @@ export default class World
         if(this.portal)
         {
             this.portal.update()
+        }
+
+        if(this.particles)
+        {
+            this.particles.update()
         }
 
         if(this.carLight)
