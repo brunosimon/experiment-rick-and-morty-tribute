@@ -16,14 +16,15 @@ export default class World
         this.setPortal()
         this.setCarLight()
         this.setPortalGunLight()
+        this.setEnvironment()
         
-        this.resources.on('groupEnd', (_group) =>
-        {
-            if(_group.name === 'base')
-            {
-                this.setEnvironment()
-            }
-        })
+        // this.resources.on('groupEnd', (_group) =>
+        // {
+        //     if(_group.name === 'base')
+        //     {
+        //         this.setEnvironment()
+        //     }
+        // })
     }
 
     setPortal()

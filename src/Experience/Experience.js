@@ -3,12 +3,12 @@ import { Pane } from 'tweakpane'
 import Time from './Utils/Time.js'
 import Sizes from './Utils/Sizes.js'
 import Stats from './Utils/Stats.js'
-import Resources from './Resources.js'
+// import Resources from './Resources.js'
 import Renderer from './Renderer.js'
 import Camera from './Camera.js'
 import World from './World.js'
 
-import assets from './assets.js'
+// import assets from './assets.js'
 
 export default class Experience
 {
@@ -32,7 +32,7 @@ export default class Experience
         this.setScene()
         this.setCamera()
         this.setRenderer()
-        this.setResources()
+        // this.setResources()
         this.setWorld()
         
         this.sizes.on('resize', () =>
@@ -93,15 +93,15 @@ export default class Experience
         this.targetElement.appendChild(this.renderer.instance.domElement)
     }
 
-    setResources()
-    {
-        this.resources = new Resources(assets)
+    // setResources()
+    // {
+    //     this.resources = new Resources(assets)
 
-        this.resources.on('progress', () =>
-        {
-            console.log('progress')
-        })
-    }
+    //     this.resources.on('progress', () =>
+    //     {
+    //         console.log('progress')
+    //     })
+    // }
 
     setWorld()
     {
