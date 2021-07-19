@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js'
 
-export default class CarLight
+export default class Sparkels
 {
     constructor()
     {
@@ -14,7 +14,7 @@ export default class CarLight
 
         // Debug
         this.debugFolder = this.debug.addFolder({
-            title: 'carLight',
+            title: 'sparkles',
             expanded: true,
         })
 
@@ -25,12 +25,13 @@ export default class CarLight
     {
         this.light = {}
         
-        this.light.color = '#3ec0ff'
-        this.light.intensity = 0.22
+        this.light.color = '#ff7c00'
+
+        this.light.intensity = 0.61
 
         // Instance
-        this.light.instance = new THREE.PointLight(this.light.color, this.light.intensity, 0, 5.98)
-        this.light.instance.position.set(2.172, -0.216, 2.271)
+        this.light.instance = new THREE.PointLight(this.light.color, this.light.intensity, 0, 2.61)
+        this.light.instance.position.set(-1.528, -0.905, -0.994)
         this.scene.add(this.light.instance)
 
         // Controls
@@ -62,7 +63,7 @@ export default class CarLight
             .addInput(
                 this.light,
                 'intensity',
-                { min: 0, max: 10 }
+                { min: 0, max: 1 }
             )
 
         this.debugFolder
@@ -93,8 +94,8 @@ export default class CarLight
 
     update()
     {
-        // Light
-        this.light.instance.intensity = this.light.intensity + Math.sin(this.time.elapsed * 0.00004 * 100) * this.light.intensity * 0.5 - this.light.intensity * 0.5
-        // this.light.instance.intensity = this.light.intensity
+        this.light.instance.intensity = this.light.intensity
+        this.light.instance.intensity += Math.sin(this.time.elapsed * 0.002) * this.light.intensity * 0.5
+        this.light.instance.intensity += Math.sin(this.time.elapsed * 0.021) * this.light.intensity * 0.3 * Math.sin(this.time.elapsed * 0.00876)
     }
 }

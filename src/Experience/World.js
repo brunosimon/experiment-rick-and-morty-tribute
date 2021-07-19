@@ -3,6 +3,7 @@ import Portal from './Portal.js'
 import Particles from './Particles.js'
 import CarLight from './CarLight.js'
 import PortalGunLight from './PortalGunLight.js'
+import Sparkles from './Sparkles.js'
 import Environment from './Environment.js'
 
 export default class World
@@ -18,6 +19,7 @@ export default class World
         this.setParticles()
         this.setCarLight()
         this.setPortalGunLight()
+        this.setSparkles()
         this.setEnvironment()
     }
 
@@ -39,6 +41,11 @@ export default class World
     setPortalGunLight()
     {
         this.portalGunLight = new PortalGunLight()
+    }
+
+    setSparkles()
+    {
+        this.sparkles = new Sparkles()
     }
     
     setEnvironment()
@@ -74,6 +81,11 @@ export default class World
         if(this.carLight)
         {
             this.carLight.update()
+        }
+
+        if(this.sparkles)
+        {
+            this.sparkles.update()
         }
 
         if(this.environment)
