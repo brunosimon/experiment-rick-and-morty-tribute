@@ -29,7 +29,7 @@ export default class PortalGunLight
 
         // Instance
         this.light.instance = new THREE.PointLight(this.light.color, 0.01, 0, 8.70)
-        this.light.instance.position.set(-3.099, -0.886, 3.925)
+        this.light.instance.position.set(-3.099, -1.085, 3.845)
         this.scene.add(this.light.instance)
 
         // Controls

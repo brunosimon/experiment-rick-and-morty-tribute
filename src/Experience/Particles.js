@@ -62,6 +62,7 @@ export default class Particles
 
         this.material = new THREE.ShaderMaterial({
             transparent: true,
+            depthWrite: false,
             uniforms:
             {
                 uTime: { value: 0 },

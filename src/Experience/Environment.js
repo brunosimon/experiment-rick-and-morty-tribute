@@ -22,8 +22,10 @@ export default class Environment extends EventEmitter
             expanded: false,
         })
 
-        this.startLoading()
+        this.group = new THREE.Group()
+        this.scene.add(this.group)
 
+        this.startLoading()
     }
 
     startLoading()
@@ -137,7 +139,7 @@ export default class Environment extends EventEmitter
             }
         })
 
-        this.scene.add(this.model)
+        this.group.add(this.model)
 
         window.requestAnimationFrame(() =>
         {

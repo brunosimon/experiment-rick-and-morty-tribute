@@ -16,21 +16,16 @@ export default class World
         this.resources = this.experience.resources
         
         this.setPortal()
-        this.setParticles()
         this.setCarLight()
         this.setPortalGunLight()
         this.setSparkles()
         this.setEnvironment()
+        this.setParticles()
     }
 
     setPortal()
     {
         this.portal = new Portal()
-    }
-
-    setParticles()
-    {
-        this.particles = new Particles()
     }
 
     setCarLight()
@@ -56,6 +51,11 @@ export default class World
         {
             gsap.to(this.portal.surface.material.uniforms.uLoadingMaskAlpha, { value: 0, delay: 1, duration: 1 })
         })
+    }
+
+    setParticles()
+    {
+        this.particles = new Particles()
     }
 
     resize()

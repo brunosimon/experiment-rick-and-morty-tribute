@@ -43,6 +43,7 @@ export default class Controls
         this.animation = {}
         this.animation.currentIndex = null
         this.animation.delayedCall = null
+        this.animation.overlayDelay = null
 
         this.animation.object = new THREE.Object3D()
         this.animation.object.rotation.reorder('YXZ')
@@ -124,6 +125,8 @@ export default class Controls
             )
 
             // Overlay
+            gsap.killTweensOf(this.overlay.material.uniforms.uAlpha)
+
             gsap.to(
                 this.overlay.material.uniforms.uAlpha,
                 {
@@ -133,27 +136,19 @@ export default class Controls
                 }
             )
 
-            gsap.delayedCall(duration - 1, () =>
+            this.animation.overlayDelay = gsap.delayedCall(duration - 1, () =>
             {
-                if(!this.mix.enabled)
-                {
-                    gsap.to(
-                        this.overlay.material.uniforms.uAlpha,
-                        {
-                            duration: 1,
-                            ease: 'power1.in',
-                            value: 1
-                        }
-                    )
-                }
+                gsap.to(
+                    this.overlay.material.uniforms.uAlpha,
+                    {
+                        duration: 1,
+                        ease: 'power1.in',
+                        value: 1
+                    }
+                )
             })
 
             // Wait and repeat
-            if(this.animation.delayedCall)
-            {
-                this.animation.delayedCall.kill()
-            }
-
             this.animation.delayedCall = gsap.delayedCall(duration, () =>
             {
                 if(!this.enabled)
@@ -203,7 +198,7 @@ export default class Controls
             this.mouse.y = y
 
             this.mix.action()
-            this.mix.enable()
+            this.mix.goSpherical()
         }
 
         this.mouse.onUp = (_event) =>
@@ -229,6 +224,9 @@ export default class Controls
             const normalizedWheel = normalizeWheel(_event)
 
             this.wheel.delta += normalizedWheel.pixelY
+            
+            this.mix.action()
+            this.mix.goSpherical()
         }
 
         window.addEventListener('mousewheel', this.wheel.onWheel)
@@ -238,59 +236,60 @@ export default class Controls
     {
         this.mix = {}
         
-        this.mix.enabled = false
+        this.mix.current = 'animation'
         this.mix.value = 0
         this.mix.triggerDelay = null
 
-        this.mix.enable = () =>
+        this.mix.goSpherical = () =>
         {
-            if(this.mix.enabled)
+            // Already
+            if(this.mix.current === 'spherical')
             {
                 return
             }
 
-            this.mix.enabled = true
+            this.mix.current = 'spherical'
 
             this.spherical.value.setFromVector3(this.animation.object.position)
             this.spherical.eased.value.copy(this.spherical.value)
 
-            gsap.to(this.mix, { duration: 1, value: 1 })
-        }
-
-        this.mix.disable = () =>
-        {
-            if(!this.mix.enabled)
-            {
-                return
-            }
-
+            gsap.killTweensOf(this.overlay.material.uniforms.uAlpha)
             gsap.to(
                 this.overlay.material.uniforms.uAlpha,
                 {
                     duration: 1,
                     ease: 'power1.out',
+                    value: 0
+                }
+            )
+
+            gsap.to(this.mix, { duration: 1, value: 1 })
+        }
+
+        this.mix.goAnimation = () =>
+        {
+            // Already
+            if(this.mix.current === 'animation')
+            {
+                return
+            }
+
+            this.mix.current = 'animation'
+
+            gsap.killTweensOf(this.overlay.material.uniforms.uAlpha)
+            gsap.to(
+                this.overlay.material.uniforms.uAlpha,
+                {
+                    duration: 1,
+                    ease: 'power1.in',
                     value: 1,
                     onComplete: () =>
                     {
-                        this.mix.enabled = false
                         this.mix.value = 0
                         this.animation.next()
                     }
                 }
             )
-
-        }
-
-        this.mix.autodisable = () =>
-        {
-            if(!this.mix.enabled)
-            {
-                return
-            }
-            
-            this.mix.enabled = false
-
-            gsap.to(this.mix, { duration: 1, value: 0 })
         }
 
         this.mix.action = () =>
@@ -300,15 +299,25 @@ export default class Controls
                 this.mix.triggerDelay.kill()
                 this.mix.triggerDelay = null
             }
+            if(this.animation.overlayDelay)
+            {
+                this.animation.overlayDelay.kill()
+                this.animation.overlayDelay = null
+            }
+            if(this.animation.delayedCall)
+            {
+                this.animation.delayedCall.kill()
+                this.animation.delayedCall = null
+            }
 
-            this.mix.triggerDelay = gsap.delayedCall(3, this.mix.disable)
+            this.mix.triggerDelay = gsap.delayedCall(6, this.mix.goAnimation)
         }
 
         window.addEventListener('keydown', (_event) =>
         {
             if(_event.code === 'Escape')
             {
-                this.mix.disable()
+                this.mix.goAnimation()
             }
         })
     }

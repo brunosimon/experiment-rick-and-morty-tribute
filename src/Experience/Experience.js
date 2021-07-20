@@ -115,11 +115,6 @@ export default class Experience
     setOverlay()
     {
         this.overlay = new Overlay()
-
-        this.world.environment.on('loaded', () =>
-        {
-            this.scene.add(this.overlay.mesh)
-        })
     }
 
     setControls()
