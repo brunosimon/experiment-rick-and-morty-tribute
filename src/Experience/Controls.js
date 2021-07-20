@@ -15,6 +15,7 @@ export default class Controls
         this.setSpherical()
         this.setAnimation()
         this.setMouse()
+        this.setTouch()
         this.setWheel()
         this.setMix()
 
@@ -212,6 +213,59 @@ export default class Controls
         window.addEventListener('mousedown', this.mouse.onDown)
     }
 
+    setTouch()
+    {
+        this.touch = {}
+
+        this.touch.x = 0
+        this.touch.y = 0
+
+        this.touch.delta = {}
+        this.touch.delta.x = 0
+        this.touch.delta.y = 0
+        this.touch.sensitivity = {}
+        this.touch.sensitivity.x = - 0.01
+        this.touch.sensitivity.y = - 0.01
+
+        this.touch.onStart = (_event) =>
+        {
+            this.touch.x = _event.touches[0].clientX
+            this.touch.y = _event.touches[0].clientY
+
+            this.mix.action()
+
+            window.addEventListener('touchmove', this.touch.onMove)
+            window.addEventListener('touchend', this.touch.onEnd)
+        }
+
+        this.touch.onMove = (_event) =>
+        {
+            const x = _event.touches[0].clientX
+            const y = _event.touches[0].clientY
+
+            this.touch.delta.x += x - this.touch.x
+            this.touch.delta.y += y - this.touch.y
+
+            this.touch.x = x
+            this.touch.y = y
+
+            this.mix.action()
+            this.mix.goSpherical()
+
+            // Force spherical radius
+            this.spherical.value.radius = 7
+            this.spherical.eased.value.radius = 7
+        }
+
+        this.touch.onEnd = (_event) =>
+        {
+            window.removeEventListener('touchmove', this.touch.onMove)
+            window.removeEventListener('touchend', this.touch.onEnd)
+        }
+
+        window.addEventListener('touchstart', this.touch.onStart)
+    }
+
     setWheel()
     {
         this.wheel = {}
@@ -310,7 +364,7 @@ export default class Controls
                 this.animation.delayedCall = null
             }
 
-            this.mix.triggerDelay = gsap.delayedCall(6, this.mix.goAnimation)
+            this.mix.triggerDelay = gsap.delayedCall(8, this.mix.goAnimation)
         }
 
         window.addEventListener('keydown', (_event) =>
@@ -329,9 +383,11 @@ export default class Controls
          */
         // Theta
         this.spherical.value.theta += this.mouse.delta.x * this.mouse.sensitivity.x
+        this.spherical.value.theta += this.touch.delta.x * this.touch.sensitivity.x
 
         // Phi
         this.spherical.value.phi += this.mouse.delta.y * this.mouse.sensitivity.y
+        this.spherical.value.phi += this.touch.delta.y * this.touch.sensitivity.y
         this.spherical.value.phi = Math.max(Math.min(this.spherical.value.phi, Math.PI * 0.8), Math.PI * 0.2)
 
         // Radius
@@ -369,6 +425,12 @@ export default class Controls
          */
         this.mouse.delta.x = 0
         this.mouse.delta.y = 0
+
+        /**
+         * Touch
+         */
+        this.touch.delta.x = 0
+        this.touch.delta.y = 0
 
         /**
          * Wheel
