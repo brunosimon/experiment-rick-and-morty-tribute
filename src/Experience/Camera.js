@@ -14,8 +14,14 @@ export default class Camera
         this.targetElement = this.experience.targetElement
         this.scene = this.experience.scene
 
+        // Debug
+        this.debugFolder = this.debug.addFolder({
+            title: 'camera',
+            expanded: true
+        })
+
         // Set up
-        this.mode = 'debug' // defaultCamera \ debugCamera
+        this.mode = 'default' // defaultCamera \ debugCamera
 
         this.setInstance()
         this.setModes()
@@ -52,6 +58,22 @@ export default class Camera
         // this.modes.debug.orbitControls.zoomSpeed = 0.25
         this.modes.debug.orbitControls.enableDamping = true
         this.modes.debug.orbitControls.update()
+
+
+        this.debugFolder
+            .addInput(
+                this,
+                'mode',
+                {
+                    view: 'list',
+                    label: 'mode',
+                    options:
+                    [
+                        { text: 'default', value: 'default' },
+                        { text: 'debug', value: 'debug' },
+                    ]
+                }
+            )
     }
 
 

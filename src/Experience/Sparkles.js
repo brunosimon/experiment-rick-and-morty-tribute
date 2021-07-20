@@ -15,7 +15,7 @@ export default class Sparkels
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'sparkles',
-            expanded: true,
+            expanded: false,
         })
 
         this.setLight()

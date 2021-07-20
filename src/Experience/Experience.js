@@ -7,6 +7,8 @@ import Stats from './Utils/Stats.js'
 import Renderer from './Renderer.js'
 import Camera from './Camera.js'
 import World from './World.js'
+import Overlay from './Overlay.js'
+import Controls from './Controls.js'
 
 // import assets from './assets.js'
 
@@ -34,6 +36,8 @@ export default class Experience
         this.setRenderer()
         // this.setResources()
         this.setWorld()
+        this.setOverlay()
+        this.setControls()
         
         this.sizes.on('resize', () =>
         {
@@ -108,6 +112,21 @@ export default class Experience
         this.world = new World()
     }
 
+    setOverlay()
+    {
+        this.overlay = new Overlay()
+
+        this.world.environment.on('loaded', () =>
+        {
+            this.scene.add(this.overlay.mesh)
+        })
+    }
+
+    setControls()
+    {
+        this.controls = new Controls()
+    }
+
     update()
     {
         if(this.stats)
@@ -120,6 +139,9 @@ export default class Experience
         
         if(this.renderer)
             this.renderer.update()
+
+        if(this.controls)
+            this.controls.update()
 
         window.requestAnimationFrame(() =>
         {
@@ -144,9 +166,6 @@ export default class Experience
 
         if(this.world)
             this.world.resize()
-
-        if(this.navigation)
-            this.navigation.resize()
     }
 
     destroy()

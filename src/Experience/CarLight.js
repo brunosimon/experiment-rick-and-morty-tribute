@@ -15,7 +15,7 @@ export default class CarLight
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'carLight',
-            expanded: true,
+            expanded: false,
         })
 
         this.setLight()

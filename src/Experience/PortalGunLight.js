@@ -15,7 +15,7 @@ export default class PortalGunLight
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'portalGunLight',
-            expanded: true,
+            expanded: false,
         })
 
         this.setLight()

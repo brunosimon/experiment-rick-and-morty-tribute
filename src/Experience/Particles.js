@@ -12,12 +12,6 @@ export default class Particles
         this.time = this.experience.time
         this.scene = this.experience.scene
 
-        // Debug
-        this.debugFolder = this.debug.addFolder({
-            title: 'particles',
-            expanded: true,
-        })
-
         this.setGeometry()
         this.setMaterial()
         this.setPoints()

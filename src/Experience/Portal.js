@@ -14,7 +14,7 @@ export default class Portal
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'portal',
-            expanded: true,
+            expanded: false,
         })
 
         this.group = new THREE.Group()
@@ -49,7 +49,7 @@ export default class Portal
         // Geometry
         this.surface.geometry = new THREE.PlaneGeometry(1, 1, 15, 15)
         this.surface.geometry.scale(1, 1.5, 1)
-        this.surface.geometry.translate(0, 0.25, 0)
+        this.surface.geometry.translate(0, 0, 0)
 
         // Material
         this.surface.material = new THREE.ShaderMaterial({

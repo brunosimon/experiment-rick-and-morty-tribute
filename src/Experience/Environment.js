@@ -19,7 +19,7 @@ export default class Environment extends EventEmitter
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'environment',
-            expanded: true,
+            expanded: false,
         })
 
         this.startLoading()
@@ -123,6 +123,7 @@ export default class Environment extends EventEmitter
             newMaterial.uniforms.uRevealProgress = this.uniforms.uRevealProgress
             newMaterial.uniforms.uPlasmaColor1 = this.uniforms.uPlasmaColor1
             newMaterial.uniforms.uPlasmaColor2 = this.uniforms.uPlasmaColor2
+            newMaterial.transparent = true
 
             material.newMaterial = newMaterial
         }

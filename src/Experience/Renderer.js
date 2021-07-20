@@ -18,7 +18,7 @@ export default class Renderer
         // Debug
         this.debugFolder = this.debug.addFolder({
             title: 'renderer',
-            expanded: true,
+            expanded: false,
         })
         
         this.usePostprocess = false
@@ -36,6 +36,7 @@ export default class Renderer
             alpha: false,
             antialias: true
         })
+        this.instance.sortObjects = false
         this.instance.domElement.style.position = 'absolute'
         this.instance.domElement.style.top = 0
         this.instance.domElement.style.left = 0
@@ -83,8 +84,8 @@ export default class Renderer
                     label: 'toneMapping',
                     options:
                     [
-                        { text: 'No', value: THREE.NoToneMapping },,
-                        { text: 'Linear', value: THREE.LinearToneMapping },,
+                        { text: 'No', value: THREE.NoToneMapping },
+                        { text: 'Linear', value: THREE.LinearToneMapping },
                         { text: 'Reinhard', value: THREE.ReinhardToneMapping },
                         { text: 'Cineon', value: THREE.CineonToneMapping },
                         { text: 'ACESFilmic', value: THREE.ACESFilmicToneMapping },
